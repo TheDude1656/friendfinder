@@ -19,20 +19,17 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({
     type: "application/vnd.api+json"
 }));
-
+app.use(express.static(__dirname + '/app/public'));
 
 //Routing
 //*****************************************/
 
-app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "/app/public/home.html"));
-    console.log("Home page hit!");
-});
+//html routing
+require("./app/routing/htmlRoutes.js")(app);
 
-app.get("/survey", function (req, res) {
-    res.sendFile(path.join(__dirname, "/app/public/survey.html"));
-    console.log("Survey page hit!");
-});
+//api routing
+
+require("./app/routing/apiRoutes.js")(app);
 
 
 
