@@ -1,4 +1,4 @@
-var name, picURL, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, newFriend;
+var name, picURL, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, total, newFriend;
 
 $("#submit").on("click", function (event) {
 
@@ -15,7 +15,12 @@ $("#submit").on("click", function (event) {
     q8 = parseInt($('#q8').val());
     q9 = parseInt($('#q9').val());
     q10 = parseInt($('#q10').val());
-    newFriend = new Friend(name, picURL, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10);
+    newFriend = {
+        name: name,
+        picURL: picURL,
+        responses: [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10],
+        total: q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10
+    }
 
     var modalTitle = $(".modal-title");
     var modalBody = $(".modal-body");
@@ -24,7 +29,6 @@ $("#submit").on("click", function (event) {
 
     if (filledOut()) {
         $.get(apiFriendsRoute, function (data) {
-            console.log(data);
             var match = friendMatch(data);
             if (match.name !== undefined) {
                 modalTitle.text('You have a match!');
@@ -50,21 +54,6 @@ function filledOut() {
         !isNaN(q5) && !isNaN(q6) && !isNaN(q7) && !isNaN(q8) && !isNaN(q9) && !isNaN(q10));
 };
 
-function Friend(name, picURL, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10) {
-    this.name = name;
-    this.picture = picURL;
-    this.q1 = q1;
-    this.q2 = q2;
-    this.q3 = q3;
-    this.q4 = q4;
-    this.q5 = q5;
-    this.q6 = q6;
-    this.q7 = q7;
-    this.q8 = q8;
-    this.q9 = q9;
-    this.q10 = q10
-};
-
 function friendMatch(data) {
     var difference = 50;
     var minName;
@@ -74,7 +63,7 @@ function friendMatch(data) {
         if (localDiff < difference) {
             difference = localDiff;
             minName = response.name;
-            minImage = response.image;
+            minImage = response.picURL;
         }
     });
     return {
