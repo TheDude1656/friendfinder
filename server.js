@@ -7,7 +7,7 @@ var path = require("path");
 //Express Server
 //*****************************************/
 var app = express();
-var PORT = 80;
+var PORT = 3000;
 
 //Express app handling data
 //*****************************************/
