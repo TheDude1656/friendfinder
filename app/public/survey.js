@@ -25,6 +25,7 @@ $("#submit").on("click", function (event) {
     var modalTitle = $(".modal-title");
     var modalBody = $(".modal-body");
     var modal = $("#modal");
+    var modalPic = $("#matchpic")
     var apiFriendsRoute = "/api/friends";
 
     if (filledOut()) {
@@ -32,7 +33,8 @@ $("#submit").on("click", function (event) {
             var match = friendMatch(data);
             if (match.name !== undefined) {
                 modalTitle.text('You have a match!');
-                modalBody.html('<p class="strong">You\'re most compatible with:</p><p>' + match.name + '</p><img src="' + match.picURL + '" height="200">');
+                modalBody.html('<p class="strong">You\'re most compatible with:</p><p>' + match.name + '</p>');
+                modalBody.html('<p><img src="' + match.picURL + '"height="150px"></p>');
             } else {
                 modalTitle.text('Too few friends');
                 modalBody.text('Sorry, there are too few friends to match you with.');
